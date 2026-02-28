@@ -1,4 +1,5 @@
 config.py
 venv/
-idea/
+.idea/
 PATHS.txt
+__pycache__/
