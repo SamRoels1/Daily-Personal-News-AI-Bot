@@ -9,16 +9,20 @@ class NewsSummarizer:
     def summarize(self, raw_news):
         print("\nHanding data to Gemini to write your newsletter...")
 
-        prompt = f"""
-        You are an expert journalist. I have collected the top news articles of the day across Global, Technology, Science, and European news.
+        prompt = f"""You are an objective news intelligence analyst and Editor-in-Chief. I am providing you with a large batch of raw news articles across Global, Technology, Science, and European news.
 
-        Please write a cohesive, engaging morning newsletter summarizing the most important points. 
-        Do not just list the articles; weave them together into a readable briefing.
-        Use clear headings for each category, bullet points for readability, and maintain a professional yet friendly tone.
+        Your primary task is to FILTER this data. You must evaluate the articles and SELECT ONLY the top 3 to 5 most critical, globally significant, and impactful stories from each category. Prioritize major geopolitical conflicts, groundbreaking tech/science, and massive economic shifts. Ignore minor, local, or trivial news.
+
+        For the highly significant stories you select, provide a comprehensive, strictly factual, and unbiased briefing. 
+        Do not use conversational filler, introductions, or attempt to be "entertaining." Include all vital facts, numbers, quotes, and context provided in the raw data. 
+
+        Format requirements:
+        - Group the selected news by category with clear headings.
+        - For EVERY selected story, the title MUST be a clickable Markdown link. You MUST use the exact "URL:" provided for that specific article in the raw data. Do NOT make up or hallucinate URLs. Format it exactly like this: [Insert Story Title Here](Insert Exact URL Here)
+        - Below the title, provide a detailed, multi-bullet summary of all the facts.
 
         Here is the raw data:
-        {raw_news}
-        """
+        {raw_news}"""
 
         response = self.client.models.generate_content(
             model="gemini-2.5-flash",
